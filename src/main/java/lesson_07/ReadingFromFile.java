@@ -20,11 +20,9 @@ public class ReadingFromFile {
 
     public static void main(String[] args) throws EmptyStackException, FileNotFoundException {
         String[] header = new String[0];
-        // Добавить автоматическую генерацию многомерного массива в зависимости значений в файле
-        int[][] data = new int[3][3];
 
-        // Сепаратор используется, чтобы путь корректно отображался на всех ОС, так как на Windows используется "\", а, например, на Mac "/".
-        // Актуально в случае, если путь до файла одинаковый
+        // РЎРµРїР°СЂР°С‚РѕСЂ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ, С‡С‚РѕР±С‹ РїСѓС‚СЊ РєРѕСЂСЂРµРєС‚РЅРѕ РѕС‚РѕР±СЂР°Р¶Р°Р»СЃСЏ РЅР° РІСЃРµС… РћРЎ, С‚Р°Рє РєР°Рє РЅР° Windows РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ "\", Р°, РЅР°РїСЂРёРјРµСЂ, РЅР° Mac "/".
+        // РђРєС‚СѓР°Р»СЊРЅРѕ РІ СЃР»СѓС‡Р°Рµ, РµСЃР»Рё РїСѓС‚СЊ РґРѕ С„Р°Р№Р»Р° РѕРґРёРЅР°РєРѕРІС‹Р№
         String separator = File.separator;
         String path = "." + separator + "src" + separator + "main" + separator + "java" + separator + "lesson_07" + separator + "testFile.csv";
         File file = new File(path);
@@ -34,30 +32,24 @@ public class ReadingFromFile {
         try {
             header = scanner.nextLine().split(";");
         } catch (NoSuchElementException e) {
-            System.out.println("Файл пуст!");
+            System.out.println("Р¤Р°Р№Р» РїСѓСЃС‚!");
             scanner.close();
         } finally {
             System.out.println(Arrays.toString(header));
         }
 
         while (scanner.hasNextLine()) {
-            int lineCounter = 0;
             String line = scanner.nextLine();
             String[] strLineArray = line.split(";");
             int[] numLineArray = new int[strLineArray.length];
             int counter = 0;
 
             for (String number : strLineArray) {
-                // присвоение в многомерный массив работает некорректно
-                data[lineCounter][counter] = Integer.parseInt(number);
                 numLineArray[counter] = Integer.parseInt(number);
                 counter++;
             }
             System.out.println(Arrays.toString(numLineArray));
-            lineCounter++;
         }
-
-        System.out.println(Arrays.deepToString(data));
 
        /* try {
             String line = scanner.nextLine();
@@ -71,7 +63,7 @@ public class ReadingFromFile {
             }
             System.out.println(Arrays.toString(numLineArray));
         } catch (NoSuchElementException e) {
-            System.out.println("Файл не имеет значений!");
+            System.out.println("Р¤Р°Р№Р» РЅРµ РёРјРµРµС‚ Р·РЅР°С‡РµРЅРёР№!");
         } finally {
             System.out.println(Arrays.deepToString(data));
             scanner.close();
