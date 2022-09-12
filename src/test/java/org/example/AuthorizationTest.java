@@ -7,8 +7,6 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.util.concurrent.TimeUnit;
-
 public class AuthorizationTest {
     public static LoginPage loginPage;
     public static HomePage homePage;
@@ -24,10 +22,8 @@ public class AuthorizationTest {
         homePage = new HomePage(driver);
         //окно разворачивается на полный экран
         driver.manage().window().maximize();
-        //задержка на выполнение теста = 10 сек.
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //получение ссылки на страницу входа из файла настроек
-        driver.get(ConfProperties.getProperty("loginpage"));
+        driver.get(ConfProperties.getProperty("logging"));
     }
 
     @Test
@@ -38,15 +34,10 @@ public class AuthorizationTest {
         Assert.assertEquals("Your account", homePage.getUserName());
     }
 
-    @Test
-    public void emptyPasswordFieldAuthorization() {
-        loginPage.inputEmail(ConfProperties.getProperty("email"));
-        loginPage.clickLoginBtn();
-        Assert.assertTrue(loginPage.isEmptyPasswordHint());
-    }
-
     @AfterClass
     public static void tearDown() {
+        homePage.openAccountPage();
+        loginPage.clickSignOutBtn();
         driver.quit();
     }
 }

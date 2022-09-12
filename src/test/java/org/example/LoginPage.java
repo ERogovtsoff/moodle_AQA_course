@@ -22,8 +22,8 @@ public class LoginPage {
     @FindBy(xpath = "//button[@id='submit-button']")
     private WebElement loginBtn;
 
-    @FindBy(xpath = "//div[@aria-live='assertive']")
-    private WebElement emptyPasswordHint;
+    @FindBy(xpath = "//span[@class='primary-nav__item-text' and text()='Sign out']")
+    private WebElement signOutBtn;
 
     public void inputPassword(String password) {
         passwordField.sendKeys(password);
@@ -36,8 +36,8 @@ public class LoginPage {
     public void clickLoginBtn() {
         loginBtn.click();
     }
-// дописать проверку, когда false, когда true
-    public boolean isEmptyPasswordHint() {
-        return true;
+
+    public void clickSignOutBtn() {
+        signOutBtn.click();
     }
 }
