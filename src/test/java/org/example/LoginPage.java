@@ -25,6 +25,13 @@ public class LoginPage {
     @FindBy(xpath = "//span[@class='primary-nav__item-text' and text()='Sign out']")
     private WebElement signOutBtn;
 
+    public void clearEmailInputField() {
+        emailField.clear();
+    }
+
+    public void clearPasswordInputField() {
+        passwordField.clear();
+    }
     public void inputPassword(String password) {
         passwordField.sendKeys(password);
     }

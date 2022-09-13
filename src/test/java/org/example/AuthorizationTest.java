@@ -28,7 +28,9 @@ public class AuthorizationTest {
 
     @Test
     public void authorizationTest() {
+        loginPage.clearEmailInputField();
         loginPage.inputEmail(ConfProperties.getProperty("email"));
+        loginPage.clearPasswordInputField();
         loginPage.inputPassword(ConfProperties.getProperty("password"));
         loginPage.clickLoginBtn();
         Assert.assertEquals("Your account", homePage.getUserName());
