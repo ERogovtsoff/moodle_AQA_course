@@ -1,9 +1,9 @@
 package org.example;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,7 +15,7 @@ public class AndersenWebsiteTest {
     public static HomePage homePage;
     public static WebDriver driver;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         //определение пути до драйвера и его настройка
         System.setProperty("webdriver.chrome.driver", ConfProperties.getProperty("chromedriver"));
@@ -31,12 +31,12 @@ public class AndersenWebsiteTest {
 
     @Test
     public void findSkypeBtn() {
-        Assert.assertTrue(homePage.isSkypeBtnExists());
+        Assertions.assertTrue(homePage.isSkypeBtnExists());
     }
 
     @Test
     public void findWhatsAppBtn() {
-        Assert.assertTrue(homePage.isWhatsAppBtnExists());
+        Assertions.assertTrue(homePage.isWhatsAppBtnExists());
     }
 
     @Test
@@ -46,10 +46,10 @@ public class AndersenWebsiteTest {
         homePage.clickVerivoxBtn();
         // подождать пока полностью прогрузится страница
         Thread.sleep(500);
-        Assert.assertEquals(verivoxPage.getCurrentUrl(), ConfProperties.getProperty("verivoxpage"));
+        Assertions.assertEquals(verivoxPage.getCurrentUrl(), ConfProperties.getProperty("verivoxpage"));
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         driver.quit();
     }
