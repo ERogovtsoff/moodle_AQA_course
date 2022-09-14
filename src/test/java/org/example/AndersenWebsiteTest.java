@@ -1,9 +1,6 @@
 package org.example;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -30,16 +27,19 @@ public class AndersenWebsiteTest {
     }
 
     @Test
+    @DisplayName("Displaying Skype button")
     public void findSkypeBtn() {
         Assertions.assertTrue(homePage.isSkypeBtnExists());
     }
 
     @Test
+    @DisplayName("Displaying WhatsApp button")
     public void findWhatsAppBtn() {
         Assertions.assertTrue(homePage.isWhatsAppBtnExists());
     }
 
     @Test
+    @DisplayName("Opening Verivox project page")
     public void openVerivoxProjectPage() throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", homePage.getVerivoxBtn());
