@@ -4,7 +4,6 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.HomePage;
@@ -20,6 +19,8 @@ public class OrdersTest {
 
     @BeforeEach
     public void setup() {
+        // путь к хром драйверу
+        System.setProperty("webdriver.chrome.driver", ConfProperties.getProperty("chromedriver"));
         //создание экземпляра драйвера
         driver = new ChromeDriver();
         //окно разворачивается на полный экран
@@ -58,7 +59,7 @@ public class OrdersTest {
 
     @Test
     @DisplayName("Checking order. Delivery")
-    public void deliveryOrder() throws InterruptedException {
+    public void deliveryOrder() {
         homePage.clickAddElementBtn();
         wait.until(ExpectedConditions.visibilityOf(homePage.getConfirmBtn()));
         homePage.clickConfirmBtn();

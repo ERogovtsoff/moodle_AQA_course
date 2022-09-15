@@ -6,11 +6,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class HomePage {
-    public WebDriver driver;
 
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
-        this.driver = driver;
     }
 
     @FindBy(xpath = "//a[@id='fb_cart']")

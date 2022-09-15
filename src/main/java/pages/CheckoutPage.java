@@ -6,11 +6,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class CheckoutPage {
-    private WebDriver driver;
 
     public CheckoutPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
-        this.driver = driver;
     }
 
     @FindBy(xpath = "//div/div[@class='row']")
