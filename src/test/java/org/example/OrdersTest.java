@@ -6,8 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.HomePage;
 import pages.CheckoutPage;
+import pages.HomePage;
 
 import java.time.Duration;
 
@@ -17,10 +17,14 @@ public class OrdersTest {
     private static WebDriver driver;
     private static WebDriverWait wait;
 
-    @BeforeEach
-    public void setup() {
+    @BeforeAll
+    public static void propSetup() {
         // путь к хром драйверу
         System.setProperty("webdriver.chrome.driver", ConfProperties.getProperty("chromedriver"));
+    }
+
+    @BeforeEach
+    public void setup() {
         //создание экземпляра драйвера
         driver = new ChromeDriver();
         //окно разворачивается на полный экран
@@ -60,11 +64,11 @@ public class OrdersTest {
     @Test
     @DisplayName("Checking order. Delivery")
     public void deliveryOrder() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
         homePage.clickAddElementBtn();
         wait.until(ExpectedConditions.visibilityOf(homePage.getConfirmBtn()));
         homePage.clickConfirmBtn();
         homePage.clickCartBtn();
-        JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", checkoutPage.getContactSection());
         checkoutPage.clearNameInputField();
         checkoutPage.setName(ConfProperties.getProperty("name"));
