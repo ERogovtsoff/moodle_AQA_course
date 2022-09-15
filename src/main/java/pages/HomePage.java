@@ -13,28 +13,28 @@ public class HomePage {
         this.driver = driver;
     }
 
-    @FindBy(xpath = "//a[@href='https://join.skype.com/aM8R4P4dNJdy']")
-    private WebElement skypeBtn;
+    @FindBy(xpath = "//a[@id='fb_cart']")
+    private WebElement cartBtn;
 
-    @FindBy(xpath = "//a[@href='https://chat.whatsapp.com/HEVIsiSlYBmG34VtaPcgmu']")
-    private WebElement whatsAppBtn;
+    @FindBy(xpath = "//div[@id='product_68']//button")
+    private WebElement addElementBtn;
 
-    @FindBy(xpath = "//*[@id=\"gatsby-focus-wrapper\"]/footer/section/div/section/div/a[text()='Verivox']")
-    private WebElement verivoxBtn;
+    @FindBy(xpath = "//button[@class='swal2-confirm swal2-styled swal2-default-outline']")
+    private WebElement confirmBtn;
 
-    public boolean isSkypeBtnExists() {
-        return skypeBtn.isEnabled();
+    public WebElement getConfirmBtn() {
+        return confirmBtn;
     }
 
-    public boolean isWhatsAppBtnExists() {
-        return whatsAppBtn.isEnabled();
+    public void clickCartBtn() {
+        cartBtn.click();
     }
 
-    public void clickVerivoxBtn() {
-        verivoxBtn.click();
+    public void clickAddElementBtn() {
+        addElementBtn.click();
     }
 
-    public WebElement getVerivoxBtn() {
-        return verivoxBtn;
+    public void clickConfirmBtn() {
+        confirmBtn.click();
     }
 }
