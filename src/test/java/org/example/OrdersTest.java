@@ -30,11 +30,11 @@ public class OrdersTest {
         //окно разворачивается на полный экран
         driver.manage().window().maximize();
         //получение ссылки на страницу входа из файла настроек
-        driver.get(ConfProperties.getProperty("devHomepage"));
+        driver.get(ConfProperties.getProperty("prodHomepage"));
         checkoutPage = new CheckoutPage(driver);
         homePage = new HomePage(driver);
         //создаём явное ожидание
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
     @Test
@@ -46,30 +46,40 @@ public class OrdersTest {
         homePage.clickCartBtn();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", checkoutPage.getContactSection());
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getJuFrame()));
+        driver.switchTo().frame(checkoutPage.getJuFrame());
+        checkoutPage.closeFrame();
+        driver.switchTo().parentFrame();
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getNameInputField()));
         checkoutPage.clearNameInputField();
         checkoutPage.setName(ConfProperties.getProperty("name"));
         checkoutPage.clearPhoneInputField();
         checkoutPage.setPhoneNumber(ConfProperties.getProperty("phoneNumber"));
         checkoutPage.clearEmailInputField();
         checkoutPage.setEmailInputField(ConfProperties.getProperty("email"));
-        checkoutPage.choosePickup();
         checkoutPage.agreeCheckout();
         checkoutPage.clearCommentInputField();
         checkoutPage.setComment(ConfProperties.getProperty("comment"));
         checkoutPage.calculateOrder();
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getConfirmOrder()));
         checkoutPage.confirmOrder();
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getApprovedMessage()));
     }
 
     @Test
     @DisplayName("Checking order. Delivery")
     public void deliveryOrder() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
         homePage.clickAddElementBtn();
         wait.until(ExpectedConditions.visibilityOf(homePage.getConfirmBtn()));
         homePage.clickConfirmBtn();
         homePage.clickCartBtn();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", checkoutPage.getContactSection());
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getJuFrame()));
+        driver.switchTo().frame(checkoutPage.getJuFrame());
+        checkoutPage.closeFrame();
+        driver.switchTo().parentFrame();
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getNameInputField()));
         checkoutPage.clearNameInputField();
         checkoutPage.setName(ConfProperties.getProperty("name"));
         checkoutPage.clearPhoneInputField();
@@ -86,6 +96,7 @@ public class OrdersTest {
         checkoutPage.calculateOrder();
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getConfirmOrder()));
         checkoutPage.confirmOrder();
+        wait.until(ExpectedConditions.invisibilityOf(checkoutPage.getConfirmOrder()));
     }
 
     @AfterEach

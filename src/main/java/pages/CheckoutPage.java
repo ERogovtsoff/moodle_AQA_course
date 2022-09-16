@@ -44,6 +44,31 @@ public class CheckoutPage {
     @FindBy(xpath = "//input[@name='address_1']")
     private WebElement addressInputField;
 
+    @FindBy(xpath = "//iframe[@id='ju_iframe_850758']")
+    private WebElement juFrame;
+
+    @FindBy(xpath = "//em")
+    private WebElement closeFrameBtn;
+
+    @FindBy(xpath = "//h1[text()='Ваш заказ принят!']")
+    private WebElement approvedMessage;
+
+    public WebElement getApprovedMessage() {
+        return approvedMessage;
+    }
+
+    public WebElement getNameInputField() {
+        return nameInputField;
+    }
+
+    public void closeFrame() {
+        closeFrameBtn.click();
+    }
+
+    public WebElement getJuFrame() {
+        return juFrame;
+    }
+
     public WebElement getAddressInputField() {
         return addressInputField;
     }
