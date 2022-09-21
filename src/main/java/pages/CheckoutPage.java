@@ -7,11 +7,14 @@ import org.openqa.selenium.support.PageFactory;
 
 public class CheckoutPage {
 
+    private WebDriver driver;
+
     public CheckoutPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 
-    @FindBy(xpath = "//div/div[@class='row']")
+    @FindBy(xpath = "//div[@id='custom-customer']")
     private WebElement contactSection;
 
     @FindBy(xpath = "//input[@id='customer-input-firstname']")
@@ -29,6 +32,12 @@ public class CheckoutPage {
     @FindBy(xpath = "//input[@value='yandextaxi.yandextaxi']")
     private WebElement deliveryRadio;
 
+    @FindBy(xpath = "//label[@id='near-time']")
+    private WebElement nearRadio;
+
+    @FindBy(xpath = "//label[@id='select-date-time']")
+    private WebElement selectDateRadio;
+
     @FindBy(xpath = "//input[@id='input-agree']")
     private WebElement agreeCheckbox;
 
@@ -38,6 +47,7 @@ public class CheckoutPage {
     @FindBy(xpath = "//input[@id='button-custom-order']")
     private WebElement calculateOrder;
 
+    // //div[@id='custom-customer']/div[@class='buttons']/div[@class='pull-right']/input[@id='button-confirm']
     @FindBy(xpath = "//input[@id='button-confirm']")
     private WebElement confirmOrder;
 
@@ -50,11 +60,40 @@ public class CheckoutPage {
     @FindBy(xpath = "//em")
     private WebElement closeFrameBtn;
 
-    @FindBy(xpath = "//h1[text()='Ваш заказ принят!']")
-    private WebElement approvedMessage;
+    @FindBy(xpath = "//input[@value='cheque']")
+    private WebElement cashRadio;
 
-    public WebElement getApprovedMessage() {
-        return approvedMessage;
+    @FindBy(xpath = "//input[@value='webpay_card']")
+    private WebElement cardRadio;
+
+    @FindBy(xpath = "//div[@class='pull-left']")
+    private WebElement continueBtn;
+
+    @FindBy(xpath = "//div[@id='custom-confirm']")
+    private WebElement confirmSection;
+
+    public WebElement getContinueBtn() {
+        return continueBtn;
+    }
+
+    public void clickContinueBtn() {
+        continueBtn.click();
+    }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
+    public void setCashRadio() {
+        cashRadio.click();
+    }
+
+    public void setCardRadio() {
+        cardRadio.click();
+    }
+
+    public void setNearTime() {
+        nearRadio.click();
     }
 
     public WebElement getNameInputField() {
@@ -79,6 +118,10 @@ public class CheckoutPage {
 
     public WebElement getContactSection() {
         return contactSection;
+    }
+
+    public WebElement getConfirmSection() {
+        return confirmSection;
     }
 
     public void clearNameInputField() {

@@ -30,7 +30,7 @@ public class OrdersTest {
         //окно разворачивается на полный экран
         driver.manage().window().maximize();
         //получение ссылки на страницу входа из файла настроек
-        driver.get(ConfProperties.getProperty("prodHomepage"));
+        driver.get(ConfProperties.getProperty("devHomepage"));
         checkoutPage = new CheckoutPage(driver);
         homePage = new HomePage(driver);
         //создаём явное ожидание
@@ -39,17 +39,19 @@ public class OrdersTest {
 
     @Test
     @DisplayName("Checking order. Pickup")
-    public void pickupOrder() {
+    public void pickupOrder() throws InterruptedException {
         homePage.clickAddElementBtn();
         wait.until(ExpectedConditions.visibilityOf(homePage.getConfirmBtn()));
         homePage.clickConfirmBtn();
         homePage.clickCartBtn();
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getContactSection()));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", checkoutPage.getContactSection());
-        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getJuFrame()));
+        // отключение модального окна с розыгрышем
+        /*wait.until(ExpectedConditions.visibilityOf(checkoutPage.getJuFrame()));
         driver.switchTo().frame(checkoutPage.getJuFrame());
         checkoutPage.closeFrame();
-        driver.switchTo().parentFrame();
+        driver.switchTo().parentFrame();*/
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getNameInputField()));
         checkoutPage.clearNameInputField();
         checkoutPage.setName(ConfProperties.getProperty("name"));
@@ -57,13 +59,21 @@ public class OrdersTest {
         checkoutPage.setPhoneNumber(ConfProperties.getProperty("phoneNumber"));
         checkoutPage.clearEmailInputField();
         checkoutPage.setEmailInputField(ConfProperties.getProperty("email"));
-        checkoutPage.agreeCheckout();
+        checkoutPage.choosePickup();
+        checkoutPage.setNearTime();
+        checkoutPage.setCashRadio();
         checkoutPage.clearCommentInputField();
         checkoutPage.setComment(ConfProperties.getProperty("comment"));
+        checkoutPage.agreeCheckout();
         checkoutPage.calculateOrder();
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getConfirmSection()));
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getConfirmOrder()));
+        js.executeScript("arguments[0].scrollIntoView();", checkoutPage.getConfirmOrder());
         checkoutPage.confirmOrder();
-        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getApprovedMessage()));
+        wait.until(ExpectedConditions.invisibilityOf(checkoutPage.getConfirmOrder()));
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getContinueBtn()));
+        checkoutPage.clickContinueBtn();
+        wait.until(ExpectedConditions.invisibilityOf(checkoutPage.getContinueBtn()));
     }
 
     @Test
@@ -75,10 +85,10 @@ public class OrdersTest {
         homePage.clickCartBtn();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", checkoutPage.getContactSection());
-        wait.until(ExpectedConditions.visibilityOf(checkoutPage.getJuFrame()));
+        /*wait.until(ExpectedConditions.visibilityOf(checkoutPage.getJuFrame()));
         driver.switchTo().frame(checkoutPage.getJuFrame());
         checkoutPage.closeFrame();
-        driver.switchTo().parentFrame();
+        driver.switchTo().parentFrame();*/
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getNameInputField()));
         checkoutPage.clearNameInputField();
         checkoutPage.setName(ConfProperties.getProperty("name"));
@@ -90,13 +100,17 @@ public class OrdersTest {
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getAddressInputField()));
         checkoutPage.clearAddressInputField();
         checkoutPage.setAddress(ConfProperties.getProperty("address"));
-        checkoutPage.agreeCheckout();
+        checkoutPage.setNearTime();
+        checkoutPage.setCardRadio();
         checkoutPage.clearCommentInputField();
         checkoutPage.setComment(ConfProperties.getProperty("comment"));
+        checkoutPage.agreeCheckout();
         checkoutPage.calculateOrder();
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getConfirmOrder()));
+        js.executeScript("arguments[0].scrollIntoView();", checkoutPage.getConfirmOrder());
         checkoutPage.confirmOrder();
         wait.until(ExpectedConditions.invisibilityOf(checkoutPage.getConfirmOrder()));
+        Assertions.assertEquals("https://securesandbox.webpay.by/", checkoutPage.getCurrentUrl());
     }
 
     @AfterEach
