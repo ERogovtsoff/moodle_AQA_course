@@ -39,7 +39,7 @@ public class OrdersTest {
 
     @Test
     @DisplayName("Checking order. Pickup")
-    public void pickupOrder() throws InterruptedException {
+    public void pickupOrder() {
         homePage.clickAddElementBtn();
         wait.until(ExpectedConditions.visibilityOf(homePage.getConfirmBtn()));
         homePage.clickConfirmBtn();
