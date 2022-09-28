@@ -70,7 +70,6 @@ public class OrdersTest {
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getConfirmOrder()));
         js.executeScript("arguments[0].scrollIntoView();", checkoutPage.getConfirmOrder());
         checkoutPage.confirmOrder();
-        wait.until(ExpectedConditions.invisibilityOf(checkoutPage.getConfirmOrder()));
         wait.until(ExpectedConditions.visibilityOf(checkoutPage.getContinueBtn()));
         checkoutPage.clickContinueBtn();
         wait.until(ExpectedConditions.invisibilityOf(checkoutPage.getContinueBtn()));
@@ -110,7 +109,7 @@ public class OrdersTest {
         js.executeScript("arguments[0].scrollIntoView();", checkoutPage.getConfirmOrder());
         checkoutPage.confirmOrder();
         wait.until(ExpectedConditions.invisibilityOf(checkoutPage.getConfirmOrder()));
-        Assertions.assertEquals("https://securesandbox.webpay.by/", checkoutPage.getCurrentUrl());
+        Assertions.assertEquals("https://payment.webpay.by/", checkoutPage.getCurrentUrl());
     }
 
     @AfterEach
